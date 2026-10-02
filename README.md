@@ -32,7 +32,7 @@ To identify the highest-paying opportunities, I filtered remote (`Anywhere`) Dat
 
 To understand what skills are required for the highest-paying roles, I joined the top 10 highest-paying jobs (from the previous query) with the skills tables, using a CTE to keep the query readable.
 
-**Key finding:** *SQL, Python, Power BI, Tableau...*
+**Key finding:** SQL was the most frequently required skill among the top 10 highest-paying jobs, appearing in 8 out of 10 postings, followed closely by Python (7) and Tableau (6). This shows that even at the very top of the salary range, the same core skills from the broader "in-demand" list remain essential — high pay doesn't necessarily require exotic or niche skills.
 
 ### 3. In-Demand Skills
 
@@ -97,3 +97,9 @@ Extending the top-paying skills analysis from Query 4, I broke the results down 
 Using a `CASE` statement to categorize postings into "Remote" and "On-site" groups, I compared the number of postings and average salary between the two.
 
 **Key finding:** Remote postings pay slightly more on average ($94,770 vs. $93,765) — only about a 1% difference, which isn't meaningful in practice. The bigger story is the volume gap: on-site postings (4,859) vastly outnumber remote ones (604), roughly 8-to-1. This suggests remote flexibility doesn't come with a significant pay premium or penalty — it's simply a much smaller slice of the overall Data Analyst job market.
+
+### Salary Distribution by Level
+
+Using a `CASE` statement, I bucketed Data Analyst salaries into Entry, Mid, and Senior level brackets to see how postings are distributed across pay ranges, rather than looking at a single average.
+
+**Key finding:** Most postings fall into the Mid level bracket (2,773 postings, avg. $80,744), followed by Senior level (1,981 postings, avg. $127,400), with Entry level roles being the smallest group (709 postings, avg. $51,566). This suggests the Data Analyst job market skews toward candidates with some experience already — entry-level opportunities exist but make up a relatively small share (about 13%) of postings compared to mid and senior roles.

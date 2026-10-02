@@ -1,10 +1,11 @@
 /*
 Question: What skills are required for the top-paying Data Analyst jobs?
 - Use the top 10 highest-paying Data Analyst jobs from query_1 as a base (CTE).
-- Join with skills_job_dim and skills_dim to find which skills each of
-  those jobs requires.
-- Why? Reveals which skills are associated with the highest-paying roles,
-  helping identify what to focus on to target those positions.
+- Join with skills_job_dim and skills_dim, then count how many of those
+  10 jobs require each skill.
+- Why? Reveals which skills are most commonly associated with the
+  highest-paying roles, helping identify what to focus on to target
+  those positions.
 */
 
 WITH top_paying_jobs AS (
@@ -29,13 +30,15 @@ WITH top_paying_jobs AS (
     LIMIT 10
 )
 
-SELECT 
-    top_paying_jobs.*,
-    skills
+SELECT
+    skills,
+    COUNT(*) AS skill_count
 FROM top_paying_jobs
 INNER JOIN skills_job_dim
     ON top_paying_jobs.job_id = skills_job_dim.job_id
 INNER JOIN skills_dim 
     ON skills_job_dim.skill_id = skills_dim.skill_id
-ORDER BY 
-    salary_year_avg DESC;
+GROUP BY
+    skills
+ORDER BY
+    skill_count DESC;
