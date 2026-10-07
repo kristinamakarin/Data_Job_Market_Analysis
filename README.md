@@ -169,6 +169,19 @@ See notebook here: [`2_Skill_Demand.ipynb`](./project_python/2_Skill_Demand.ipyn
 > * **Data Engineer:** Heavily shifts towards infrastructure and programming, with **SQL** (68%)and **Python** (65%) dominating, supported by cloud platforms like **AWS** (43%).
 > * **Data Scientist:** Centered around **Python** (72%), followed by **SQL** (51%) and statistical languages like **R** (44%).
 
+### Skill Trends Over Time (US Data Analyst Roles)
+
+To understand whether the demand for top skills shifts month-to-month, I analyzed job postings throughout the year to track the percentage of postings requiring specific technical skills over time for **Data Analyst** positions in the United States.
+
+See notebook here: [`3_Skill_Trends.ipynb`](./project_python/3_Skill_Trend.ipynb)
+
+![Trending Top Skills for Data Analyst in the US](./project_python/images/trending_top_skills.png)
+
+> **Key insight:** 
+> * **SQL Leadership:** **SQL** remains the undisputed leader, consistently holding over 50% market demand all year — starting strong at ~63% in January and closing at ~53% in December.
+> * **Excel Fluctuations:** **Excel** maintains second place, generally hovering between 40% and 45%, though it dips to a low of ~34% in October and November before recovering to ~40% in December.
+> * **Core Toolset Stability:** **Python**, **Tableau**, and **Power BI** form a steady secondary tier, with Python and Tableau intersecting around 32-33% in June, while Power BI maintains a consistent baseline around 20% throughout the year.
+
 </details>
 
 ## What I Learned
