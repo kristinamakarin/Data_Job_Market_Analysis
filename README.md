@@ -15,6 +15,9 @@ The project is structured into two main parts:
 * What skills are most in demand for Data Analysts?
 * Which skills are associated with higher salaries?
 * What are the most optimal skills to learn (high demand AND high paying)?
+* **[Python]** What does the overall job market structure look like (top countries, companies, benefits)?
+* **[Python]** How does skill demand compare across Data Analyst, Data Engineer, and Data Scientist roles?
+* **[Python]** How is demand for the top Data Analyst skills trending over the year?
 
 ---
 
@@ -173,7 +176,7 @@ See notebook here: [`2_Skill_Demand.ipynb`](./project_python/2_Skill_Demand.ipyn
 
 To understand whether the demand for top skills shifts month-to-month, I analyzed job postings throughout the year to track the percentage of postings requiring specific technical skills over time for **Data Analyst** positions in the United States.
 
-See notebook here: [`3_Skill_Trends.ipynb`](./project_python/3_Skill_Trend.ipynb)
+See notebook here: [`3_Skils_Trend.ipynb`](./project_python/3_Skills_Trend.ipynb)
 
 ![Trending Top Skills for Data Analyst in the US](./project_python/images/trending_top_skills.png)
 
@@ -181,6 +184,19 @@ See notebook here: [`3_Skill_Trends.ipynb`](./project_python/3_Skill_Trend.ipynb
 > * **SQL Leadership:** **SQL** remains the undisputed leader, consistently holding over 50% market demand all year — starting strong at ~63% in January and closing at ~53% in December.
 > * **Excel Fluctuations:** **Excel** maintains second place, generally hovering between 40% and 45%, though it dips to a low of ~34% in October and November before recovering to ~40% in December.
 > * **Core Toolset Stability:** **Python**, **Tableau**, and **Power BI** form a steady secondary tier, with Python and Tableau intersecting around 32-33% in June, while Power BI maintains a consistent baseline around 20% throughout the year.
+
+### Salary Distributions Across Core Data Roles (US)
+
+To analyze and compare compensation structures, I built a box plot visualization displaying the yearly salary distributions for the top 6 core data roles in the United States, ordered by median salary.
+
+See notebook here: [`4_Salary_Analysis.ipynb`](./project_python/4_Salary_Analysis.ipynb)
+
+![Salary Distributions in the United States](./project_python/images/salary_analysis.png)
+
+> **Key insight:** 
+> * **Senior Roles Lead Compensation:** **Senior Data Scientists** and **Senior Data Engineers** command the highest median salaries, both hovering around the $140K–$150K range, with significant right-skewed outliers stretching past $400K–$500K.
+> * **Specialization vs. Experience:** Mid-level Data Scientists and Data Engineers sit comfortably above Data Analysts, while **Data Analysts** represent a more accessible entry-to-mid tier with a median salary closer to $100K.
+> * **Wide Outlier Spreads:** Across almost all roles, numerous outliers extend far beyond the upper whiskers (reaching up to $600K for Data Scientists), reflecting high-paying specialized or executive-level positions within the US job market.
 
 </details>
 
