@@ -7,7 +7,15 @@ The project is structured into two main parts:
 * [`project_sql/`](./project_sql/) — Contains core SQL queries focusing on top-paying roles, skill demands, and optimal learning paths.
 * [`project_python/`](./project_python/) — Contains Python scripts, exploratory data analysis, and ongoing analytical tasks.
 
----
+## Dataset & Setup
+
+- **Source Dataset:** Job postings data compiled by Luke Barousse (2023), covering global data roles.
+
+- **Environment Setup:** 
+  ```bash
+  conda create -n data_jobs python=3.11
+  conda activate data_jobs
+  pip install pandas numpy matplotlib seaborn datasets ast adjustText
 
 ## Questions I Wanted to Answer
 * What are the top-paying Data Analyst jobs?
@@ -18,16 +26,14 @@ The project is structured into two main parts:
 * **[Python]** What does the overall job market structure look like (top countries, companies, benefits)?
 * **[Python]** How does skill demand compare across Data Analyst, Data Engineer, and Data Scientist roles?
 * **[Python]** How is demand for the top Data Analyst skills trending over the year?
-
----
+* **[Python]** How well do Data Analyst roles pay compared to other data roles?
+* **[Python]** Which skills are both in demand and well paid for Data Analysts, and which technology categories do they belong to?
 
 ## Tools I Used
 * **SQL & PostgreSQL** — for complex querying, multi-table joins, and database management.
 * **Python, Pandas & NumPy** — for data cleaning, manipulation, and exploratory data analysis.
 * **Matplotlib & Seaborn** — for generating clean visual insights and data distributions.
 * **VS Code & Git/GitHub** — for development, version control, and portfolio sharing.
-
----
 
 ## Project Structure & Workflow
 
@@ -39,7 +45,11 @@ The project is structured into two main parts:
 * **Most Optimal Skills to Learn** (Query 5)
 
 ### Part 2: Python Analysis & Additional Tasks ([`project_python/`](./project_python/))
-* **Exploratory Data Analysis (EDA)** (`1_EDA_intro.ipynb`) — Initial data inspection, country/company distributions, and benefit offerings.
+* **Exploratory Data Analysis (EDA)** (`1_EDA_intro.ipynb`)
+* **Skill Demand by Role** (`2_Skill_Demand.ipynb`)
+* **Skill Trends Over Time** (`3_Skills_Trend.ipynb`)
+* **Salary Analysis** (`4_Salary_Analysis.ipynb`)
+* **Most Optimal Skills** (`5_Optimal_Skills.ipynb`)
 
 ## The Analysis
 
@@ -116,7 +126,7 @@ Using a `CASE` statement, I bucketed Data Analyst salaries into Entry, Mid, and 
 </details>
 
 <details>
-<summary><b>Click to expand Python EDA & Visual Insights</b></summary>
+<summary><b>Click to expand Python Analysis & Visualizations</b></summary>
 
 ### Exploratory Data Analysis (EDA)
 
@@ -138,7 +148,7 @@ See notebook here: [1_EDA_intro.ipynb](./project_python/1_EDA_intro.ipynb)
 
 ![Number of Jobs per Country](./project_python/images/jobs_per_country.png)
 
-> **Key insight:**  The United States dominates the data job market with over 200,000 postings—more than four times the volume of the next highest country, India—while European and global tech hubs like the UK, France, and Germany follow closely behind, highlighting a heavily US-centric distribution in global data opportunities.
+> **Key insight:**  The United States dominates with over 200,000 postings, followed by tech hubs like India, UK, France, and Germany.
 
 ---
 
@@ -181,9 +191,9 @@ See notebook here: [`3_Skils_Trend.ipynb`](./project_python/3_Skills_Trend.ipynb
 ![Trending Top Skills for Data Analyst in the US](./project_python/images/trending_top_skills.png)
 
 > **Key insight:** 
-> * **SQL Leadership:** **SQL** remains the undisputed leader, consistently holding over 50% market demand all year — starting strong at ~63% in January and closing at ~53% in December.
-> * **Excel Fluctuations:** **Excel** maintains second place, generally hovering between 40% and 45%, though it dips to a low of ~34% in October and November before recovering to ~40% in December.
-> * **Core Toolset Stability:** **Python**, **Tableau**, and **Power BI** form a steady secondary tier, with Python and Tableau intersecting around 32-33% in June, while Power BI maintains a consistent baseline around 20% throughout the year.
+> * **SQL Leadership:** **SQL** remains the undisputed leader all year, holding steady between 45% and 54% market demand, aligning with the aggregate average.
+> * **Excel Fluctuations:** **Excel** maintains second place, hovering between 34% and 43%, showing a slight drop in late autumn before recovering in December.
+> * **Core Toolset Stability:** **Python**, **Tableau**, and **Power BI** track closely together in the 25%–30% range, while SAS holds a stable baseline around 18%–21%.
 
 ### Salary Distributions Across Core Data Roles (US)
 
@@ -198,6 +208,29 @@ See notebook here: [`4_Salary_Analysis.ipynb`](./project_python/4_Salary_Analysi
 > * **Specialization vs. Experience:** Mid-level Data Scientists and Data Engineers sit comfortably above Data Analysts, while **Data Analysts** represent a more accessible entry-to-mid tier with a median salary closer to $100K.
 > * **Wide Outlier Spreads:** Across almost all roles, numerous outliers extend far beyond the upper whiskers (reaching up to $600K for Data Scientists), reflecting high-paying specialized or executive-level positions within the US job market.
 
+### Most Optimal Skills for Data Analysts in the US
+
+To find the skills worth learning first, I combined demand (the percentage of postings requesting a skill) with median salary. I kept only skills appearing in more than 5% of postings so the chart stays readable, and color-coded each skill by its technology category (programming, analyst tools, cloud, databases) to look for patterns beyond individual skills.
+
+See notebook here: [`5_Optimal_Skills.ipynb`](./project_python/5_Optimal_Skills.ipynb)
+
+First, I mapped out the direct relationship between market demand and compensation:
+
+![Most Optimal Skills for Data Analysts in the US](./project_python/images/optimal_skills.png)
+
+To gain deeper context, I then grouped each skill into technology categories (`programming`, `analyst_tools`, `databases`, and `cloud`), adding color-coded groupings to distinguish tool types:
+
+![Most Optimal Skills with Technology Categories](./project_python/images/optimal_skills_with_technology.png)
+
+```python
+df_plot = df_DA_skills_high_demand.merge(df_technology, left_on='job_skills', right_on='skills')
+sns.scatterplot(data=df_plot, x='skill_percent', y='median_salary', hue='technology')
+```
+
+> **Key insight:**
+> * **Programming:** **Python** and **R** combine high salaries with solid demand, making them strong strategic additions to core SQL skills.
+> * **Analyst tools:** **Excel**, **Tableau**, and **Power BI** offer high market volume and demand security, serving as baseline operational tools.
+> * **Cloud and databases:** Specialized database and cloud infrastructure tools lean higher on median compensation, offering strong growth potential.
 </details>
 
 ## What I Learned
@@ -209,14 +242,23 @@ Throughout this project, I strengthened my SQL skills in several key areas:
 - **Aggregation:** Using `GROUP BY`, `COUNT()`, and `AVG()` to summarize data — for example, counting how many postings require each skill, and calculating average salaries per skill.
 - **Query alternatives:** Learning that the same analytical question can often be solved multiple ways (e.g. CTEs vs. a single query with `HAVING`), and that the right choice depends on readability and reusability, not just correctness.
 - **Filtering out noise:** Recognizing that raw rankings (like "top-paying skills") can be misleading due to small sample sizes, and using thresholds (`demand_count > 10`) to surface more reliable insights.
-- **Data analysis with Python:** Using Pandas for inspecting datasets, cleaning dataframes, and leveraging Seaborn/Matplotlib to build distribution plots and uncover hidden market insights.
+- **Python data cleaning:** Converting string-encoded dates and lists into real datetime and list objects (`pd.to_datetime`, `ast.literal_eval`).
+- **Reshaping data:** Using `.explode()`, `.pivot_table()` and `.merge()` to turn nested skill lists into countable rows and join them with a technology lookup.
+- **Normalizing metrics:** Switching from raw counts to percentages, so comparisons stay fair across months and roles with different posting volumes.
+- **Visualization:** Building box plots, line charts and color-coded scatter plots with Seaborn and Matplotlib, including custom axis formatting.
 
 ## Conclusions
 
-This analysis revealed that the "best" skill to learn depends entirely on what you're optimizing for:
+This project combined SQL querying and Python data analysis to provide a comprehensive view of the Data Analyst job market. The findings reveal that the "best" skills and strategic career choices depend on what you are optimizing for:
 
-- **In-demand skills** (SQL, Excel, Python, Tableau, Power BI) are the safest bet — they appear across the widest range of job postings.
-- **Top-paying skills** (PySpark, Bitbucket, Couchbase) pay the most on average, but are tied to a small, niche subset of highly specialized roles.
-- **Most optimal skills** (Go, Confluence, Hadoop, Snowflake, Azure) strike a balance — well-paid *and* requested often enough to be a realistic, strategic learning target.
+1. **Foundational vs. High-Earning Skills:**
+   - **In-Demand Core (High Volume):** **SQL** and **Excel** remain non-negotiable baseline requirements, appearing in over 50% and 40% of postings respectively throughout the entire year. **Python** and **Tableau** form the essential secondary toolkit.
+   - **Top-Paying Niche (High Salary):** Tools like **PySpark**, **Bitbucket**, and **Couchbase** offer the highest average compensation, but represent a tiny fraction of total job openings.
+   - **Most Optimal Strategic Skills:** Skills such as **Snowflake**, **Azure**, **AWS**, and **Go** balance strong market demand with significantly higher median salaries, offering the best return on learning investment.
 
-For someone starting out, the in-demand skills remain the essential foundation. But for someone looking to stand out and increase earning potential, the "most optimal" list points toward cloud and data engineering adjacent tools as a strong next step beyond the basics.
+2. **Role & Salary Hierarchy (Python Insights):**
+   - **Career Progression:** Senior Data Science and Engineering roles command top market rates (~$140K–$150K median), whereas **Data Analyst** roles serve as an accessible entry-to-mid career path with a median salary near ~$100K.
+   - **Specialization Advantage:** Blending core analyst tools with cloud technology and programming (Python/R) positions analysts in the upper salary quartiles.
+
+3. **Methodological Note on Scope:**
+   - SQL queries focused on remote (`Anywhere`) postings, while Python analyses evaluated broader US-wide datasets (filtered strictly by `job_title_short == 'Data Analyst'`). This methodological distinction demonstrates how sampling criteria influence specific skill rankings, reinforcing the importance of context in data-driven decision-making.
